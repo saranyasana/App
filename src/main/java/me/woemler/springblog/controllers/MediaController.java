@@ -23,27 +23,32 @@ import java.util.List;
 @Controller
 public class MediaController {
 
-    private static Logger logger  = LoggerFactory.getLogger(MediaController.class);
-    
-    @Autowired
-    private ServletContext servletContext;
-    
-    @RequestMapping(value="/media")
-    public String media(ModelMap map){
-        String contextPath = servletContext.getContextPath();
-        String staticDir = "/static/img/public/";
-        String staticPath = servletContext.getRealPath(staticDir);
-        List<String> images = new ArrayList();
-        File staticFileDir = new File(staticPath);
-        if (staticFileDir.list() != null && staticFileDir.list().length > 0){
-            for (String file: staticFileDir.list()){
-                if (file.matches("[a-zA-Z0-9._-]+\\.(jpg|png|gif|svg)$")){
-                    images.add(contextPath + staticDir + file);
-                }
-            }
-        }
-        map.addAttribute("images", images);
-        return "media";
-    }
-    
+	private static Logger logger  = LoggerFactory.getLogger(MediaController.class);
+
+	@Autowired
+	private ServletContext servletContext;
+
+	@RequestMapping(value="/media")
+	public String media(ModelMap map){
+		String contextPath = servletContext.getContextPath();
+		String staticDir = "/img/";
+		String staticPath = servletContext.getRealPath(staticDir);
+		List<String> images = new ArrayList<String>();
+		File staticFileDir = new File(staticPath);
+		System.out.println(staticPath);
+		  System.out.println(staticFileDir.canRead());
+		if (staticFileDir.list() != null && staticFileDir.list().length > 0){
+			for (String file: staticFileDir.list()){
+				if (file.matches("[a-zA-Z0-9._-]+\\.(jpg|png|gif|svg)$")){
+					images.add(contextPath + staticDir + file);
+					System.out.println(images);
+				}
+			}
+		}
+		map.addAttribute("images", images);
+
+
+		return "media";
+	}
+
 }
