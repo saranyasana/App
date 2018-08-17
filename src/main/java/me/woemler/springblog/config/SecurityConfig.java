@@ -2,6 +2,7 @@ package me.woemler.springblog.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,6 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	@SuppressWarnings("SpringJavaAutowiringInspection")
 	@Autowired
 	private UserRepository userRepository;
+	
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/blog/**", "/static/**", "/about", "/code", "/media", "/error").permitAll()
+				.antMatchers("/","/static/**","/registration","/home","/error").permitAll()
+				.antMatchers("/blog/**", "/about","/media").hasRole("USER")
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()

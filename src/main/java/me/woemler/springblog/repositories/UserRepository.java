@@ -8,4 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author woemler
  */
 public interface UserRepository extends MongoRepository<User, String>, UserDetailsService {
+
+	User findByEmail(String email);
 }

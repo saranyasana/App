@@ -25,7 +25,7 @@ public class BlogController {
     
     @Autowired private BlogRepository blogRepository;
     
-    @RequestMapping(value={"/", "", "/blog"}, method=RequestMethod.GET)
+    @RequestMapping(value={"/home", "/", "/blog"}, method=RequestMethod.GET)
     public String home(
         @PageableDefault(size = 5, sort = {"postDate"}, direction = Sort.Direction.DESC) Pageable pageable,
         ModelMap map

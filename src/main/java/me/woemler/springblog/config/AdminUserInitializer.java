@@ -41,7 +41,7 @@ public class AdminUserInitializer implements CommandLineRunner {
 		user.setRegistrationDate(new Date());
 		user.setRoles(new HashSet<>(Arrays.asList(User.ROLE_USER, User.ROLE_ADMIN)));
 		userRepository.insert(user);
-		
+		System.out.println(user.getRoles());
 		logger.info(String.format("SUCCESS: Created admin user with username %s and password %s", "admin", password));
 		
 	}
